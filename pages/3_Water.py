@@ -22,50 +22,19 @@ def create_dynamic_pie_chart(category_dict):
 
 
 
-def not_all_upper(st):
-    if isinstance(st,str):
-        return " ".join([word.title() if not word.isupper() else word for word in st.split()])
-    else:
-        pass
+def load_data():
+    data = pd.read_csv('NABERS.csv', index_col=None)
 
-def checker(words):
-    if isinstance(words,str):
-        return all(word.isupper() for word in words.split())
-    else:
-        return False
-
-
-
-def clean_df(new_file):
-    new_file.columns = [col.lower() for col in new_file.columns]
-    objects = new_file.dtypes.loc[lambda x: x == 'object']
-    objects_list = list(objects.index)
-    for i in objects.index.to_list():
-        new_file[i] = new_file[i].apply(lambda x: ' '.join(x.split()) if isinstance(x,str) else x)
-        new_file[i] = new_file[i].apply(lambda x: x.strip() if isinstance(x,str) else x)
-
-    for col in new_file[objects_list]:
-        print(col)
-        col_ratio = new_file[col].apply(checker).sum()/ new_file[col].apply(lambda x: isinstance(x, str)).sum()
-        print(col_ratio)
-        if col_ratio > 0.5:
-            new_file[col] = new_file[col].apply(lambda x: x.upper() if isinstance(x,str) else x)
-        else:
-            new_file[col] = new_file[col].apply(not_all_upper)
-            
-    new_file[['certificatevalidto','carbonneutralexpirydate']] = new_file[['certificatevalidto','carbonneutralexpirydate']].apply(pd.to_datetime)
-    new_file['combined_column'] = new_file['premiseid'] + '_' + new_file['ratingreferencenumber'].astype(str) + '_' + new_file['ratingtype'] + '_' + new_file['certificatevalidto'].astype(str)
-    return new_file
-
-df = pd.read_csv("downloaded_file_date_11-17-2023_time_21-37.csv",index_col=False)
-data = clean_df(df)
-
-def load_data(data):
+    # data[['Latitude','Longitude']] = data[['Latitude','Longitude']]
+    # data[['Latitude','Longitude']]= data[['Latitude','Longitude']].astype(str)
+    # data.rename(columns={'Latitude':'latitude', 'Longitude':'longitude'},inplace=True)
     color_code = {'Waste': '#FFA500', 'Indoor Environment': '#355E3B', 'Energy': '#FFFF00', 'Water': '#0000FF'}
     data['color'] = data['ratingtype'].map(color_code)
     return data
 
-data = load_data(data)
+# data_loading = st.text('loading data...')
+data = load_data()
+
 
 # data_loading.text('loading data...(using st.cache_data)!')
 dynamic_filters = DynamicFilters(data, filters=['state', 'premisetype'])
