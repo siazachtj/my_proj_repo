@@ -127,5 +127,7 @@ filtered_outliers_df = outliers_df[outliers_df['column'] == selected_column]
 if not filtered_outliers_df.empty and filtered_outliers_df['percent_outliers'].values[0] != 0:
 
     st.write(filtered_outliers_df.drop(columns='outliers_data'))
+
+    st.dataframe(filtered_outliers_df['outliers_data'].values[0].dropna(how='all').drop(columns=['_merge', 'color']))
 else:
     st.warning(f"No data or percent_outliers is 0 for the selected column: {selected_column}")
