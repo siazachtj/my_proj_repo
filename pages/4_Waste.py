@@ -40,26 +40,26 @@ with st.sidebar:
 filtered_data = dynamic_filters.filter_df()
 col_1, col_2= st.columns(2)
 
-st.subheader('Scatter/Histogram plot of Waste Star Rating Value over certification validation date')
+st.subheader('Scatter/histogram plot of waste star rating value over certification validation date')
 result = filtered_data.groupby('certificatevalidto')['wastestarratingvalue'].mean().reset_index()
 fig = px.scatter(result, x='certificatevalidto',y='wastestarratingvalue',marginal_x="histogram", marginal_y="rug")
 fig.update_layout(
-    xaxis_title='Carbon Neutral Expiry Date',
-    yaxis_title='Rating Value',
+    xaxis_title='Carbon neutral expiry date',
+    yaxis_title='Rating value',
     height=600,  # Set the height (in pixels) as needed
     width=1500    # Set the width (in pixels) as needed
 )
 st.plotly_chart(fig)
 
 with col_1:
-    st.subheader('Gauge chart of Waste star rating value')
+    st.subheader('Gauge chart of waste star rating value')
         
     mean_value = data['wastestarratingvalue'].mean()
 
     fig = go.Figure(go.Indicator(
         mode='gauge+number',
         value=mean_value,
-        title={'text': 'Water Star Rating'},
+        title={'text': 'Waste Star Rating'},
         gauge={'axis': {'range': [0, 6]},
                'bar': {'color': 'blue'},
                'steps': [

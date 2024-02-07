@@ -45,12 +45,12 @@ with st.sidebar:
 filtered_data = dynamic_filters.filter_df()
 col_1, col_2= st.columns(2)
 
-st.subheader('Scatter/Histogram plot of Water Star Rating Value over certification validation date')
+st.subheader('Scatter/histogram plot of water star rating value over certification validation date')
 result = filtered_data.groupby('certificatevalidto')['waterstarratingvalue'].mean().reset_index()
 fig = px.scatter(result, x='certificatevalidto',y='waterstarratingvalue',marginal_x="histogram", marginal_y="rug")
 fig.update_layout(
-    xaxis_title='Carbon Neutral Expiry Date',
-    yaxis_title='Rating Value',
+    xaxis_title='Carbon neutral expiry date',
+    yaxis_title='Rating value',
     height=600,  # Set the height (in pixels) as needed
     width=1500    # Set the width (in pixels) as needed
 )
@@ -61,7 +61,7 @@ with col_1:
     fig = go.Figure(go.Indicator(
         mode='gauge+number',
         value=mean_value,
-        title={'text': 'Water Star Rating'},
+        title={'text': 'Water star rating'},
         gauge={'axis': {'range': [0, 6]},
                'bar': {'color': 'blue'},
                'steps': [
@@ -81,7 +81,7 @@ with col_2:
     fig = go.Figure(go.Indicator(
         mode='gauge+number',
         value=mean_value,
-        title={'text': 'Water Star Rating without RW'},
+        title={'text': 'Water star rating without rw'},
         gauge={'axis': {'range': [0, 6]},
                'bar': {'color': 'blue'},
                'steps': [
@@ -89,7 +89,7 @@ with col_2:
                    {'range': [3, 4.5], 'color': 'yellow'},
                    {'range': [4.5, 6], 'color': 'green'}]}))
     st.plotly_chart(fig)
-    st.subheader('Water Intensity vs Water Intensity without RW')
+    st.subheader('Water intensity vs water intensity without rw')
     water_intensity = filtered_data[['waterintensity','waterintensitynorw']] 
     fig = px.violin(water_intensity)
     st.plotly_chart(fig)    

@@ -81,17 +81,17 @@ with col_1:
     styled_df_color_legend = df_color_legend.style.applymap(color_cells, subset=['Color Code'])
 
     # Display the styled DataFrame in Streamlit
-    st.write('Color Legend', styled_df_color_legend)
+    st.write('Color legend', styled_df_color_legend)
 
 with col_2:
     z4 = filtered_data[['premisetype', 'state']]
-    st.subheader('state and premisetype bar chart')
+    st.subheader('State and premisetype bar chart')
     st.plotly_chart(px.bar(z4, x='state', color='premisetype', barmode='stack', hover_data=['premisetype']))
 
 
     category_dict = {'energy': energy_cols, 'social': environment_cols, 'waste': waste_cols, 'water': water_cols}
     colors = ['#FF0000','#008000']
-    st.subheader('Stacked Bar Chart of Carbonneutral Count by Rating Type')
+    st.subheader('Stacked bar chart of carbonneutral count by rating type')
     grouped_data = filtered_data.groupby(['ratingtype', 'carbonneutral']).size().reset_index(name='count')
     fig = px.bar(grouped_data, x='ratingtype', y='count', color='carbonneutral', color_discrete_sequence=colors,
             )
@@ -117,7 +117,7 @@ for column in data.columns:
         outliers_list.append({'column': column, 'percent_outliers': percent_outliers, 'outliers_data': outliers_df})
 
 outliers_df = pd.DataFrame(outliers_list)
-
+st.subheader('Outlier filter with downloadable outlier data spreadsheet')
 selected_column = st.selectbox('Select column to see outliers table', outliers_df['column'])
 
 

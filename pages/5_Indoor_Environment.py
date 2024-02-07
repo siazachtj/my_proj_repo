@@ -46,12 +46,12 @@ filtered_data = dynamic_filters.filter_df()
 col_1, col_2= st.columns(2)
 
 
-st.subheader('Scatter/Histogram plot of Indoor environment Quality Star Rating Value over certification validation date')
+st.subheader('Scatter/histogram plot of indoor environment quality star rating value over certification validation date')
 result = filtered_data.groupby('certificatevalidto')['ieqstarratingvalue'].mean().reset_index()
 fig = px.scatter(result, x='certificatevalidto',y='ieqstarratingvalue',marginal_x="histogram", marginal_y="rug")
 fig.update_layout(
-    xaxis_title='Carbon Neutral Expiry Date',
-    yaxis_title='Rating Value',
+    xaxis_title='Carbon neutral expiry date',
+    yaxis_title='Rating value',
     height=600,  # Set the height (in pixels) as needed
     width=1500    # Set the width (in pixels) as needed
 )

@@ -55,7 +55,7 @@ with col_1:
     environment_filter = ['ieq','thermal','air','acoustic','lighting','office','apartment','bed','rooms','shopping']
     waste_filter = ['waste','recycle']
     water_filter = ['water']
-    st.subheader('distribution plot of energy star rating value vs energy star rating value without green power')
+    st.subheader('Distribution plot of energy star rating value vs energy star rating value without green power')
     dist_plot_data = filtered_data[['energystarratingvalue', 'energygpstarratingvaluenogp']].dropna()
 
     fig = ff.create_distplot([dist_plot_data[c] for c in dist_plot_data.columns], dist_plot_data.columns, bin_size=.25)
@@ -64,11 +64,11 @@ with col_1:
 
 
 result = filtered_data.groupby('certificatevalidto')['energystarratingvalue'].mean().reset_index()
-st.subheader('Scatter/Histogram plot of Energy Star ratings to certification validation date')
+st.subheader('Scatter/Histogram plot of energy star ratings to certification validation date')
 fig = px.scatter(result, x='certificatevalidto',y='energystarratingvalue',marginal_x="histogram", marginal_y="rug")
 fig.update_layout(
-    xaxis_title='Carbon Neutral Expiry Date',
-    yaxis_title='Rating Value',
+    xaxis_title='Carbon neutral expiry date',
+    yaxis_title='Rating value',
     height=600,  
     width=1500    
 )
@@ -76,7 +76,7 @@ st.plotly_chart(fig)
 
 with col_2:
     st.metric(value=filtered_data['ghgemissionsscope123withoutrenewableelectricity'].mean(), label = 'Greenhouse Gas Emissions(without renewable energy)')
-    st.subheader('violin plot of rei related KPIs')
+    st.subheader('Violin plot of rei related KPIs')
     data = filtered_data[['nonrenewableelectricity_rei%',
     'onsiterenewableelectricity_rei%',
     'retandstateterritorytargets_rei%',
